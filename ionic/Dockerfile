@@ -1,19 +1,11 @@
-FROM node:7.1
+FROM node:latest
 
-MAINTAINER walternascimentobarroso@gmail.com
+WORKDIR /www/app
 
-WORKDIR /root
+RUN apt-get update && \
+    npm install -g cordova ionic && \
+    apt-get install -y git && \
+    git config --global user.email "walternascimentobarroso@gmail.com" && \
+    git config --global user.name "Walter Nascimento"
 
-RUN \
-  npm config set registry https://registry.npm.taobao.org/ && \
-  mkdir blog && cd blog && \
-  npm install -g cordova ionic
-
-
-WORKDIR /root/app/
-
-VOLUME ["/root/app/"]
-
-EXPOSE 4000
-
-CMD ["hexo", "server", "-i", "0.0.0.0"]
+EXPOSE 8100 4200 35729
