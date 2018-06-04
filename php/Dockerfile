@@ -1,13 +1,10 @@
-FROM node:9
+FROM php:7.2
 
 MAINTAINER walternascimentobarroso@gmail.com
 
 WORKDIR /www/app
 
-RUN apt-get update && \
-    npm install -g @angular/cli && \
-    apt-get install -y git && \
-    git config --global user.email "walternascimentobarroso@gmail.com" && \
-    git config --global user.name "Walter Nascimento"
+RUN	apt-get update && \
+	php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer
 
-EXPOSE 8100 4200 35729 53703
+EXPOSE 8080
