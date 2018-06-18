@@ -3,28 +3,37 @@ Dockerfile para criar uma imagem do PHP
 
 ## Instalação
 ```bash
-docker pull walternascimento/php
+docker build -t php-image .
 ```
 
 ## Inicialização
+Se for a primeira inicialização:
+
 ```bash
-docker run -d --name app -p 8080:8080 \
-	-v $(pwd):/root/app \
-	walternascimento/php
+docker run --name php-container -it --privileged -p 8080:8080 -v ~/projetos:/code php-image bash
 ```
 
+Se não for a primeira
+
+```bash
+docker start php-container
+docker exec -it php-container bash
+```
+
+Caso queira executar o servidor do php:
+
+```bash
+php -S 0.0.0.0:8080
+```
+
+### Executar o projeto no browser
+[http://localhost:8080/](http://localhost:8080/ "Exibi o projeto")
 
 
-docker build -t php .
+## Mudar permissão
+Se algum arquivo foi criado pelo usuario do container(root), você pode modificar para editar fora do container:
 
-docker run --name php -it --privileged -p 8080:8080 -v ~/projetos:/www/app php bash
-
-docker exec -it php bash
-
+```bash
 sudo chown <usuario.grupo> -R <pastadoprojeto>
-
-php -S localhost:8080 
-
-aplicação:
-http://localhost:8080/
+```
 
